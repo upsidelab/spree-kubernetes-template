@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migrate
+        image: <IMAGE_DIGEST>
+        command: ['rails']
+        args: ['db:migrate']
+        envFrom:
+        - configMapRef:
+            name: migration-config
